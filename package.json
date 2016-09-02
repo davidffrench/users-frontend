@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/davidffrench/users-frontend/issues"
   },
-  "homepage": "https://github.com/davidffrench/users-frontend#readme"
+  "homepage": "https://github.com/davidffrench/users-frontend#readme",
+  "devDependencies": {
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.1"
+  }
 }
