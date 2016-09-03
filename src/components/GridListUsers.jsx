@@ -28,7 +28,7 @@ class GridListUsers extends Component {
       <div style={styles.root}>
         <GridList
           cellHeight={200}
-          cols={4}
+          cols={3}
           style={styles.gridList}
         >
           <Subheader />

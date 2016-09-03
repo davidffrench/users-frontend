@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GridListUsers from './components/GridListUsers';
 import AppBarTop from './components/AppBarTop';
+import UserInfo from './components/UserInfo';
 
 
 const tilesData = [
@@ -68,7 +69,7 @@ class Main extends Component {
       <MuiThemeProvider>
         <div>
           <AppBarTop />
-          <GridListUsers users={tilesData} moreInfo={moreInfo}/>
+          <UserInfo users={tilesData} moreInfo={moreInfo}/>
         </div>
       </MuiThemeProvider>
     );
