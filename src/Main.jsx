@@ -7,8 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GridListUsers from './GridList';
-import AppBarTop from './AppBar';
+import GridListUsers from './components/GridListUsers';
+import AppBarTop from './components/AppBarTop';
 
 const styles = {
   container: {
