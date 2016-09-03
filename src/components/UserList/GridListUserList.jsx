@@ -16,7 +16,7 @@ const styles = {
   },
 };
 
-class GridListUsers extends Component {
+class GridListUserList extends Component {
   constructor(props) {
     super(props);
     this.users = props.users || [];
@@ -52,9 +52,9 @@ class GridListUsers extends Component {
     );
   }
 }
-GridListUsers.propTypes = {
+GridListUserList.propTypes = {
   users: React.PropTypes.array.isRequired,
   moreInfo: React.PropTypes.func,
 };
 
-export default GridListUsers;
+export default GridListUserList;

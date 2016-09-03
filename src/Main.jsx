@@ -4,9 +4,8 @@
  */
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GridListUsers from './components/GridListUsers';
-import AppBarTop from './components/AppBarTop';
-import UserInfo from './components/UserInfo';
+import MainUserList from './components/UserList/MainUserList';
+import MainUserInfo from './components/UserInfo/MainUserInfo';
 
 
 const tilesData = [
@@ -94,8 +93,7 @@ class Main extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBarTop />
-          <UserInfo user={user} />
+          <MainUserInfo user={user} />
         </div>
       </MuiThemeProvider>
     );

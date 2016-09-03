@@ -10,7 +10,7 @@ const style = {
   marginLeft: 20,
 };
 
-class UserInfo extends Component {
+class CardUserInfo extends Component {
   constructor(props) {
     super(props);
 
@@ -151,8 +151,8 @@ class UserInfo extends Component {
   }
 }
 
-UserInfo.propTypes = {
+CardUserInfo.propTypes = {
   user: React.PropTypes.object.isRequired,
 };
 
-export default UserInfo;
+export default CardUserInfo;
