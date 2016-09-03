@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 
 function handleTouchTap() {
@@ -16,7 +14,11 @@ const styles = {
   },
   searchTextField: {
     backgroundColor: 'transparent',
-    'input > color': 'white',
+    color: 'white',
+  },
+  searchPaper: {
+    paddingLeft: 5,
+    paddingRight: 5,
   },
 };
 
@@ -37,11 +39,13 @@ class AppBarTop extends Component {
           onTitleTouchTap={handleTouchTap}
           // iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           iconElementRight={
-            <AutoComplete
-              hintText="Search by Name"
-              dataSource={this.state.dataSource}
-              textFieldStyle={styles.searchTextField}
-            />
+            <Paper style={styles.searchPaper} zDepth={1}>
+              <AutoComplete
+                hintText="Search by Name"
+                dataSource={this.state.dataSource}
+                textFieldStyle={styles.searchTextField}
+              />
+            </Paper>
           }
         />
       </MuiThemeProvider>
