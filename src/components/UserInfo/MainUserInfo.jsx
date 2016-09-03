@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CardUserInfo from './CardUserInfo';
 import AppBarUserInfo from './AppBarUserInfo';
 
 class MainUserList extends Component {
   render() {
     return (
-      <div>
-        <AppBarUserInfo />
-        <CardUserInfo {...this.props} />
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <AppBarUserInfo />
+          <CardUserInfo {...this.props} />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

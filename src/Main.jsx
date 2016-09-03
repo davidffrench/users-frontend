@@ -1,12 +1,4 @@
-/**
- * In this file, we create a React component
- * which incorporates components provided by Material-UI.
- */
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MainUserList from './components/UserList/MainUserList';
-import MainUserInfo from './components/UserInfo/MainUserInfo';
-
 
 const tilesData = [
   {
@@ -90,14 +82,13 @@ const moreInfo = function (user) {
 
 class Main extends Component {
   render() {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <MainUserInfo user={user} />
-        </div>
-      </MuiThemeProvider>
+    return React.cloneElement(
+      this.props.children, { users: tilesData, moreInfo, user }
     );
   }
 }
+Main.propTypes = {
+  children: React.PropTypes.object,
+};
 
 export default Main;
