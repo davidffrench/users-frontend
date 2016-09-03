@@ -2,7 +2,7 @@
  * In this file, we create a React component
  * which incorporates components provided by Material-UI.
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -14,6 +14,8 @@ const styles = {
     paddingTop: 200,
   },
 };
+
+var a = "adasad";
 
 class Main extends Component {
   constructor(props, context) {
