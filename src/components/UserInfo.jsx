@@ -13,30 +13,48 @@ const style = {
 class UserInfo extends Component {
   constructor(props) {
     super(props);
-    this.getJSDateFromTimestamp = this.getJSDateFromTimestamp.bind(this);
+
+    this.user = props.user || {};
+    this.user.name = this.user.name || {};
+    this.user.location = this.user.location || {};
+    this.user.picture = this.user.picture || {};
   }
 
   getJSDateFromTimestamp(timestamp) {
-    return new Date(timestamp * 1000);
+    return timestamp ? new Date(timestamp * 1000) : '';
+  }
+
+  getFullName() {
+    const title = this.user.name.title || '';
+    const firstName = this.user.name.first || '';
+    const lastName = this.user.name.last || '';
+    return `${title} ${firstName} ${lastName}`;
+  }
+
+  getRegisteredDate() {
+    if (!this.user.registered) return '';
+
+    const registeredDate = this.getJSDateFromTimestamp(this.user.registered);
+    return `Registered on ${registeredDate.toISOString().slice(0, 10)}`;
   }
 
   render() {
     return (
       <Card>
         <CardHeader
-          title="URL Avatar"
-          subtitle="Subtitle"
-          avatar="https://randomuser.me/api/portraits/women/17.jpg"
+          title={this.getFullName()}
+          subtitle={this.getRegisteredDate()}
+          avatar={this.user.picture.thumbnail}
         />
         <CardText>
           <Subheader>Name</Subheader>
-          <Paper zDepth={2}>
+          <Paper zDepth={1}>
             <TextField
               style={style}
               underlineShow={false}
               floatingLabelText="Title"
               floatingLabelFixed
-              value="Mr"
+              value={this.user.name.title}
             />
             <Divider />
             <TextField
@@ -44,7 +62,7 @@ class UserInfo extends Component {
               underlineShow={false}
               floatingLabelText="First Name"
               floatingLabelFixed
-              value="David"
+              value={this.user.name.first}
             />
             <Divider />
             <TextField
@@ -52,18 +70,18 @@ class UserInfo extends Component {
               underlineShow={false}
               floatingLabelText="Last Name"
               floatingLabelFixed
-              value="Ffrench"
+              value={this.user.name.last}
             />
             <Divider />
           </Paper>
           <Subheader>Location</Subheader>
-          <Paper zDepth={2}>
+          <Paper zDepth={1}>
             <TextField
               style={style}
               underlineShow={false}
               floatingLabelText="Street"
               floatingLabelFixed
-              value="1119 grove road"
+              value={this.user.location.street}
             />
             <Divider />
             <TextField
@@ -71,7 +89,7 @@ class UserInfo extends Component {
               underlineShow={false}
               floatingLabelText="City"
               floatingLabelFixed
-              value="Mountmellick"
+              value={this.user.location.city}
             />
             <Divider />
             <TextField
@@ -79,7 +97,7 @@ class UserInfo extends Component {
               underlineShow={false}
               floatingLabelText="State"
               floatingLabelFixed
-              value="rhode island"
+              value={this.user.location.state}
             />
             <Divider />
             <TextField
@@ -87,7 +105,7 @@ class UserInfo extends Component {
               underlineShow={false}
               floatingLabelText="Zip"
               floatingLabelFixed
-              value="88061"
+              value={this.user.location.zip}
             />
             <Divider />
           </Paper>
@@ -96,7 +114,7 @@ class UserInfo extends Component {
             underlineShow={false}
             floatingLabelText="Email"
             floatingLabelFixed
-            value="olivia.young@example.com"
+            value={this.user.email}
           /><br />
           <DatePicker
             style={style}
@@ -104,33 +122,37 @@ class UserInfo extends Component {
             floatingLabelText="Date of Birth"
             floatingLabelFixed
             autoOk
-            value={this.getJSDateFromTimestamp(818810543)}
+            value={this.getJSDateFromTimestamp(this.user.dob)}
           />
           <TextField
             style={style}
             underlineShow={false}
             floatingLabelText="Phone Number"
             floatingLabelFixed
-            value="011-475-1126"
+            value={this.user.phone}
           />
           <TextField
             style={style}
             underlineShow={false}
             floatingLabelText="Cell Number"
             floatingLabelFixed
-            value="081-725-2254"
+            value={this.user.cell}
           /><br />
           <TextField
             style={style}
             underlineShow={false}
             floatingLabelText="PPS"
             floatingLabelFixed
-            value="4335321T"
+            value={this.user.PPS}
           />
         </CardText>
       </Card>
     );
   }
 }
+
+UserInfo.propTypes = {
+  user: React.PropTypes.object.isRequired,
+};
 
 export default UserInfo;
