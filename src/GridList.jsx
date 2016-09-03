@@ -19,7 +19,7 @@ const styles = {
 
 const tilesData = [
   {
-    img: 'https://randomuser.me/api/portraits/women/19.jpg',
+    img: 'https://randomuser.me/api/portraits/women/20.jpg',
     title: 'Breakfast',
     author: 'jill111',
   },
@@ -39,7 +39,7 @@ const tilesData = [
     author: 'fancycrave1',
   },
   {
-    img: 'https://randomuser.me/api/portraits/women/15.jpg',
+    img: 'https://randomuser.me/api/portraits/women/19.jpg',
     title: 'Hats',
     author: 'Hans',
   },
@@ -68,7 +68,7 @@ const GridListUsers = () => (
         cols={3}
         style={styles.gridList}
       >
-        <Subheader>December</Subheader>
+        <Subheader></Subheader>
         {tilesData.map((tile) => (
           <GridTile
             key={tile.img}
