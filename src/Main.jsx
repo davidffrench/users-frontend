@@ -54,6 +54,10 @@ const tilesData = [
   },
 ];
 
+const moreInfo = function(user) {
+  alert("hello");
+}
+
 class Main extends Component {
   constructor(props, context) {
     super(props, context);
@@ -64,7 +68,7 @@ class Main extends Component {
       <MuiThemeProvider>
         <div>
           <AppBarTop />
-          <GridListUsers users={tilesData}/>
+          <GridListUsers users={tilesData} moreInfo={moreInfo}/>
         </div>
       </MuiThemeProvider>
     );
