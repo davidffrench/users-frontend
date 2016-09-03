@@ -10,12 +10,49 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GridListUsers from './components/GridListUsers';
 import AppBarTop from './components/AppBarTop';
 
-const styles = {
-  container: {
-    textAlign: 'center',
-    paddingTop: 200,
+
+const tilesData = [
+  {
+    img: 'https://randomuser.me/api/portraits/women/20.jpg',
+    title: 'Breakfast',
+    author: 'jill111',
   },
-};
+  {
+    img: 'https://randomuser.me/api/portraits/women/18.jpg',
+    title: 'Tasty burger',
+    author: 'pashminu',
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/17.jpg',
+    title: 'Camera',
+    author: 'Danson67',
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/16.jpg',
+    title: 'Morning',
+    author: 'fancycrave1',
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/19.jpg',
+    title: 'Hats',
+    author: 'Hans',
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/14.jpg',
+    title: 'Honey',
+    author: 'fancycravel',
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/13.jpg',
+    title: 'Vegetables',
+    author: 'jill111',
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/12.jpg',
+    title: 'Water plant',
+    author: 'BkrmadtyaKarki',
+  },
+];
 
 class Main extends Component {
   constructor(props, context) {
@@ -27,7 +64,7 @@ class Main extends Component {
       <MuiThemeProvider>
         <div>
           <AppBarTop />
-          <GridListUsers />
+          <GridListUsers users={tilesData}/>
         </div>
       </MuiThemeProvider>
     );
