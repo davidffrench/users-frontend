@@ -9,13 +9,6 @@ export function setState(state) {
   };
 }
 
-export function selectUser(user) {
-  return {
-    type: 'SELECT_USER',
-    state: user,
-  };
-}
-
 function receiveUser(user) {
   return {
     type: 'RECEIVE_USER',
