@@ -46,6 +46,14 @@ export class AppBarUserInfo extends Component {
     this.setState({ dialogOpen: false });
   }
 
+  handleUserDelete() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.deleteUser(this.props.userId));
+    this.handleClose();
+
+    this.props.history.push('/');
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -56,7 +64,7 @@ export class AppBarUserInfo extends Component {
       <FlatButton
         label="Delete User"
         primary={false}
-        onTouchTap={() => this.handleClose()}
+        onTouchTap={() => this.handleUserDelete()}
       />,
     ];
 
@@ -96,12 +104,14 @@ export class AppBarUserInfo extends Component {
 AppBarUserInfo.propTypes = {
   canSubmit: React.PropTypes.bool,
   isCreate: React.PropTypes.bool,
+  userId: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     canSubmit: state.get('canSubmit'),
     isCreate: state.get('isCreate'),
+    userId: state.getIn(['user', '_id']),
   };
 }
 

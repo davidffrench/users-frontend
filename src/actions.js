@@ -23,6 +23,13 @@ function receiveUsers(users) {
   };
 }
 
+export function userDeleted(state) {
+  return {
+    type: 'USER_DELETED',
+    state,
+  };
+}
+
 export function fetchUser(user) {
   const userId = user.get('_id');
   return dispatch =>
@@ -31,11 +38,20 @@ export function fetchUser(user) {
       .then(json => dispatch(receiveUser(json)));
 }
 
+
 export function fetchUsers() {
   return dispatch =>
     fetch(`${apiURL}/users/`)
       .then(response => response.json())
       .then(json => dispatch(receiveUsers(json)));
+}
+
+export function deleteUser(userId) {
+  return dispatch =>
+    fetch(`${apiURL}/users/${userId}`, {
+      method: 'GET',
+    })
+    .then(dispatch(userDeleted('Delete Successful')));
 }
 
 export function filterUsers(filtertext) {
@@ -51,4 +67,3 @@ export function removeState(nodeToRemove) {
     state: nodeToRemove,
   };
 }
-

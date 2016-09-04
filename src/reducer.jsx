@@ -4,6 +4,10 @@ function setState(state, newState) {
   return state.merge(newState);
 }
 
+function removeState(state, nodeToRemove) {
+  return state.remove(nodeToRemove);
+}
+
 function setUsers(state, users) {
   const userNames = users.map(user => {
     const firstName = user.name.first;
@@ -39,22 +43,24 @@ function setUser(state, user) {
   return state.set('user', fromJS(user));
 }
 
-function removeState(state, nodeToRemove) {
-  return state.remove(nodeToRemove);
+function setSnackBarMessage(state, message) {
+  return state.set('snackBarMessage', message);
 }
 
 export default function (state = Map(), action) {
 	switch (action.type) {
   case 'SET_STATE':
     return setState(state, action.state);
+  case 'REMOVE_STATE':
+    return removeState(state, action.state);
   case 'RECEIVE_USERS':
     return setUsers(state, action.state);
   case 'FILTER_USERS':
     return setFilteredUsers(state, action.state);
   case 'RECEIVE_USER':
     return setUser(state, action.state);
-  case 'REMOVE_STATE':
-    return removeState(state, action.state);
+  case 'USER_DELETED':
+    return setSnackBarMessage(state, action.state);
   }
   return state;
 }
