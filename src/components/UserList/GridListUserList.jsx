@@ -5,6 +5,7 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import InfoBorder from 'material-ui/svg-icons/action/info';
+import * as actionCreators from './../../actions';
 
 const styles = {
   root: {
@@ -24,6 +25,15 @@ export class GridListUserList extends Component {
     this.users = props.users || [];
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.fetchUsers());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.users = nextProps.users;
+  }
+
   getFullName(user) {
     const firstName = user.getIn(['name', 'first']);
     const lastName = user.getIn(['name', 'last']);
@@ -39,13 +49,13 @@ export class GridListUserList extends Component {
       <div style={styles.root}>
         <GridList
           cellHeight={200}
-          cols={3}
+          cols={2}
           style={styles.gridList}
         >
           <Subheader />
           {this.users.map(user =>
             <GridTile
-              key={user.get('id')}
+              key={user.get('_id')}
               title={this.getFullName(user)}
               subtitle={<span><b>{user.get('email')}</b></span>}
               actionIcon={
@@ -55,7 +65,7 @@ export class GridListUserList extends Component {
                   <InfoBorder color="white" />
                 </IconButton>}
             >
-              <img role="presentation" src={user.get('img')} />
+              <img role="presentation" src={user.getIn(['picture', 'large'])} />
             </GridTile>
           )}
         </GridList>
@@ -64,7 +74,7 @@ export class GridListUserList extends Component {
   }
 }
 GridListUserList.propTypes = {
-  users: React.PropTypes.instanceOf(Immutable.List).isRequired,
+  users: React.PropTypes.instanceOf(Immutable.List),
   history: React.PropTypes.object,
 };
 
@@ -74,4 +84,6 @@ function mapStateToProps(state) {
   };
 }
 
-export const GridListUserListContainer = connect(mapStateToProps)(GridListUserList);
+export const GridListUserListContainer = connect(
+  mapStateToProps
+)(GridListUserList);
