@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Immutable from 'immutable';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -21,13 +23,15 @@ const styles = {
   },
 };
 
-class AppBarUserList extends Component {
+export class AppBarUserList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      dataSource: ['david', 'Samantha'],
-    };
+    this.userNames = props.userNames || [];
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.userNames = nextProps.userNames.toJS();
   }
 
   render() {
@@ -40,7 +44,8 @@ class AppBarUserList extends Component {
           <Paper style={styles.searchPaper} zDepth={1}>
             <AutoComplete
               hintText="Search by Name"
-              dataSource={this.state.dataSource}
+              filter={AutoComplete.caseInsensitiveFilter}
+              dataSource={this.userNames}
               textFieldStyle={styles.searchTextField}
             />
           </Paper>
@@ -49,5 +54,16 @@ class AppBarUserList extends Component {
     );
   }
 }
+AppBarUserList.propTypes = {
+  userNames: React.PropTypes.instanceOf(Immutable.List),
+};
 
-export default AppBarUserList;
+function mapStateToProps(state) {
+  return {
+    userNames: state.get('userNames'),
+  };
+}
+
+export const AppBarUserListContainer = connect(
+  mapStateToProps
+)(AppBarUserList);

@@ -5,8 +5,15 @@ function setState(state, newState) {
 }
 
 function setUsers(state, users) {
-  const statea = state.set('users', fromJS(users));
-  return state.set('users', fromJS(users));
+  const userNames = users.map(user => {
+    const firstName = user.name.first;
+    const lastName = user.name.last;
+    return `${firstName} ${lastName}`;
+  });
+  return state.merge({
+    users: fromJS(users),
+    userNames,
+  });
 }
 
 export default function (state = Map(), action) {
