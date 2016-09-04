@@ -42,3 +42,10 @@ export function fetchUsers() {
       .then(json => dispatch(receiveUsers(json)));
 }
 
+export function filterUsers(filtertext) {
+  return {
+    type: 'FILTER_USERS',
+    state: filtertext,
+  };
+}
+

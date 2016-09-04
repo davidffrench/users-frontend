@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
+import * as actionCreators from './../../actions';
 
 function handleTouchTap() {
   alert('onTouchTap triggered on the title component');
@@ -27,11 +28,19 @@ export class AppBarUserList extends Component {
   constructor(props) {
     super(props);
 
+    this.filterUsers = this.filterUsers.bind(this);
+
     this.userNames = props.userNames || [];
   }
 
   componentWillReceiveProps(nextProps) {
     this.userNames = nextProps.userNames.toJS();
+  }
+
+  filterUsers(fieldText) {
+    console.log('fieldText', fieldText);
+    const { dispatch } = this.props;
+    dispatch(actionCreators.filterUsers(fieldText));
   }
 
   render() {
@@ -47,6 +56,8 @@ export class AppBarUserList extends Component {
               filter={AutoComplete.caseInsensitiveFilter}
               dataSource={this.userNames}
               textFieldStyle={styles.searchTextField}
+              maxSearchResults={5}
+              onNewRequest={this.filterUsers}
             />
           </Paper>
         }

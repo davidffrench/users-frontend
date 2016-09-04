@@ -22,7 +22,8 @@ const styles = {
 export class GridListUserList extends Component {
   constructor(props) {
     super(props);
-    this.users = props.users || [];
+    this.users = props.filteredUsers || props.users || [];
+    this.colNumber = 2;
   }
 
   componentDidMount() {
@@ -31,7 +32,10 @@ export class GridListUserList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.users = nextProps.users;
+    console.log('nextProps', nextProps);
+    this.users = nextProps.filteredUsers || nextProps.users;
+    console.log(this.users);
+    if (this.users.size === 1) this.colNumber = 1;
   }
 
   getFullName(user) {
@@ -49,7 +53,7 @@ export class GridListUserList extends Component {
       <div style={styles.root}>
         <GridList
           cellHeight={200}
-          cols={2}
+          cols={this.colNumber}
           style={styles.gridList}
         >
           <Subheader />
@@ -75,12 +79,14 @@ export class GridListUserList extends Component {
 }
 GridListUserList.propTypes = {
   users: React.PropTypes.instanceOf(Immutable.List),
+  filteredUsers: React.PropTypes.instanceOf(Immutable.List),
   history: React.PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
     users: state.get('users'),
+    filteredUsers: state.get('filteredUsers'),
   };
 }
 
