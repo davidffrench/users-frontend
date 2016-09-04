@@ -54,6 +54,18 @@ export class AppBarUserInfo extends Component {
     this.props.history.push('/');
   }
 
+  handleUserSave() {
+    const { dispatch } = this.props;
+
+    if (this.props.isCreate) {
+      dispatch(actionCreators.createUser(this.props.user.toJS()));
+    } else {
+      dispatch(actionCreators.saveUser(this.props.userId, this.props.user.toJS()));
+    }
+
+    this.handleClose();
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -81,7 +93,11 @@ export class AppBarUserInfo extends Component {
               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
-              <MenuItem primaryText="Save" disabled={!this.canSubmit} />
+              <MenuItem 
+                primaryText="Save"
+                disabled={!this.canSubmit}
+                onTouchTap={() => this.handleUserSave()}
+              />
               {!this.isCreate ?
                 <MenuItem primaryText="Delete" onTouchTap={() => this.handleOpen()} />
                 : null
@@ -105,6 +121,7 @@ AppBarUserInfo.propTypes = {
   canSubmit: React.PropTypes.bool,
   isCreate: React.PropTypes.bool,
   userId: React.PropTypes.string,
+  user: React.PropTypes.object,
 };
 
 function mapStateToProps(state) {
@@ -112,6 +129,7 @@ function mapStateToProps(state) {
     canSubmit: state.get('canSubmit'),
     isCreate: state.get('isCreate'),
     userId: state.getIn(['user', '_id']),
+    user: state.get('user'),
   };
 }
 

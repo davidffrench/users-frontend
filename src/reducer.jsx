@@ -1,3 +1,4 @@
+import React from 'react';
 import { Map, fromJS } from 'immutable';
 
 function setState(state, newState) {
@@ -43,6 +44,15 @@ function setUser(state, user) {
   return state.set('user', fromJS(user));
 }
 
+function updateUser(state, newState) {
+  console.log(state.toJS());
+  const userMutable = state.get('user') ? state.get('user').toJS() : {};
+
+  Object.assign(userMutable, newState.user);
+
+  return state.set('user', fromJS(userMutable));
+}
+
 function setSnackBarMessage(state, message) {
   return state.set('snackBarMessage', message);
 }
@@ -60,6 +70,10 @@ export default function (state = Map(), action) {
   case 'RECEIVE_USER':
     return setUser(state, action.state);
   case 'USER_DELETED':
+    return setSnackBarMessage(state, action.state);
+  case 'UPDATE_USER':
+    return updateUser(state, action.state);
+  case 'SAVE_USER':
     return setSnackBarMessage(state, action.state);
   }
   return state;

@@ -23,7 +23,14 @@ function receiveUsers(users) {
   };
 }
 
-export function userDeleted(state) {
+function userSaved(state) {
+  return {
+    type: 'SAVE_USER',
+    state,
+  };
+}
+
+function userDeleted(state) {
   return {
     type: 'USER_DELETED',
     state,
@@ -54,6 +61,32 @@ export function deleteUser(userId) {
     .then(dispatch(userDeleted('Delete Successful')));
 }
 
+export function saveUser(userId, user) {
+  return dispatch =>
+    fetch(`${apiURL}/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+    .then(dispatch(userSaved('Save Successful')));
+}
+
+export function createUser(user) {
+  return dispatch =>
+    fetch(`${apiURL}/users/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+    .then(dispatch(userSaved('Save Successful')));
+}
+
 export function filterUsers(filtertext) {
   return {
     type: 'FILTER_USERS',
@@ -65,5 +98,12 @@ export function removeState(nodeToRemove) {
   return {
     type: 'REMOVE_STATE',
     state: nodeToRemove,
+  };
+}
+
+export function updateUser(state) {
+  return {
+    type: 'UPDATE_USER',
+    state,
   };
 }

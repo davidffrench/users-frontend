@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { GridListUserListContainer } from './CardUserInfo';
 import { AppBarUserInfoContainer } from './AppBarUserInfo';
 import { DrawerMenuContainer } from './../DrawerMenu';
+import { SnackBarMessageContainer } from './../SnackBarMessage';
 
 class MainUserList extends Component {
   render() {
@@ -12,6 +13,7 @@ class MainUserList extends Component {
           <DrawerMenuContainer {...this.props} />
           <AppBarUserInfoContainer {...this.props} />
           <GridListUserListContainer {...this.props} />
+          <SnackBarMessageContainer {...this.props} />
         </div>
       </MuiThemeProvider>
     );

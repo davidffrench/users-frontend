@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Formsy from 'formsy-react';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
@@ -25,6 +25,7 @@ export class CardUserInfo extends Component {
     super(props);
 
     this.setCanSubmit = this.setCanSubmit.bind(this);
+    this.setUserState = this.setUserState.bind(this);
 
     this.setUser(props);
 
@@ -74,8 +75,14 @@ export class CardUserInfo extends Component {
     dispatch(actionCreators.setState({ canSubmit }));
   }
 
-  submitForm(data) {
-    alert(JSON.stringify(data, null, 4));
+  setUserState(data) {
+    if (!this.canSubmit) return;
+
+    const transformedData = this.refs.form.getModel();
+    transformedData.dob = transformedData.dob.getTime();
+
+    const { dispatch } = this.props;
+    dispatch(actionCreators.updateUser({ user: transformedData }));
   }
 
   render() {
@@ -87,7 +94,9 @@ export class CardUserInfo extends Component {
           avatar={this.user.getIn(['picture', 'thumbnail'])}
         />
         <CardText>
-          <Formsy.Form
+          <Formsy.Form 
+            ref="form"
+            onChange={this.setUserState}
             onValid={() => this.setCanSubmit(true)}
             onInvalid={() => this.setCanSubmit(false)}
             onValidSubmit={this.submitForm}
@@ -96,7 +105,7 @@ export class CardUserInfo extends Component {
             <Subheader>Name</Subheader>
             <Paper zDepth={1}>
               <FormsySelect
-                name="title"
+                name="name.title"
                 required
                 style={style}
                 underlineShow={false}
@@ -114,7 +123,7 @@ export class CardUserInfo extends Component {
               </FormsySelect>
               <Divider />
               <FormsyText
-                name="first"
+                name="name.first"
                 validations="isWords"
                 validationError={errorMessages.wordsError}
                 required
@@ -126,7 +135,7 @@ export class CardUserInfo extends Component {
               />
               <Divider />
               <FormsyText
-                name="last"
+                name="name.last"
                 validations="isWords"
                 validationError={errorMessages.wordsError}
                 required
@@ -141,7 +150,7 @@ export class CardUserInfo extends Component {
             <Subheader>Location</Subheader>
             <Paper zDepth={1}>
               <FormsyText
-                name="street"
+                name="location.street"
                 required
                 style={style}
                 underlineShow={false}
@@ -151,7 +160,7 @@ export class CardUserInfo extends Component {
               />
               <Divider />
               <FormsyText
-                name="city"
+                name="location.city"
                 validations="isWords"
                 validationError={errorMessages.wordsError}
                 required
@@ -163,7 +172,7 @@ export class CardUserInfo extends Component {
               />
               <Divider />
               <FormsyText
-                name="state"
+                name="location.state"
                 validations="isWords"
                 validationError={errorMessages.wordsError}
                 required
@@ -175,7 +184,7 @@ export class CardUserInfo extends Component {
               />
               <Divider />
               <FormsyText
-                name="zip"
+                name="location.zip"
                 validations="isNumeric"
                 validationError={errorMessages.numericError}
                 required
@@ -187,6 +196,19 @@ export class CardUserInfo extends Component {
               />
               <Divider />
             </Paper>
+            <FormsySelect
+              name="gender"
+              required
+              style={style}
+              underlineShow={false}
+              floatingLabelText="Gender"
+              floatingLabelFixed
+              value={this.user.get('gender')}
+              menuItems={this.selectFieldItems}
+            >
+              <MenuItem value={'male'} primaryText="Male" />
+              <MenuItem value={'female'} primaryText="Female" />
+            </FormsySelect><br />
             <FormsyText
               name="email"
               validations="isEmail"
@@ -227,7 +249,7 @@ export class CardUserInfo extends Component {
               value={this.user.get('cell')}
             /><br />
             <FormsyText
-              name="pps"
+              name="PPS"
               required
               style={style}
               underlineShow={false}

@@ -30,7 +30,7 @@ export class SnackBarMessage extends Component {
     return (
       <Snackbar
         open={this.state.open}
-        message={this.props.snackBarMessage}
+        message={this.props.snackBarMessage || ''}
         autoHideDuration={4000}
         onRequestClose={this.handleRequestClose}
       />
