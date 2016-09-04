@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { GridListUserListContainer } from './CardUserInfo';
+import { CardUserInfoContainer } from './CardUserInfo';
 import { AppBarUserInfoContainer } from './AppBarUserInfo';
 import { DrawerMenuContainer } from './../DrawerMenu';
 import { SnackBarMessageContainer } from './../SnackBarMessage';
 
 // Main component to structure the user info screen
-class MainUserList extends Component {
+class MainUserInfo extends Component {
   render() {
     return (
       <MuiThemeProvider>
         <div>
           <DrawerMenuContainer {...this.props} />
           <AppBarUserInfoContainer {...this.props} />
-          <GridListUserListContainer {...this.props} />
+          <CardUserInfoContainer {...this.props} />
           <SnackBarMessageContainer {...this.props} />
         </div>
       </MuiThemeProvider>
@@ -21,4 +21,4 @@ class MainUserList extends Component {
   }
 }
 
-export default MainUserList;
+export default MainUserInfo;

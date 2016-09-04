@@ -38,7 +38,8 @@ export class GridListUserList extends Component {
   componentWillReceiveProps(nextProps) {
     this.users = nextProps.filteredUsers || nextProps.users;
     // reduce number of columns if only 1 user exists, for when filtering
-    if (this.users.size === 1) this.colNumber = 1;
+    if (this.users.size === 1)
+      this.colNumber = 1;
   }
 
   // Called before the view is destroyed

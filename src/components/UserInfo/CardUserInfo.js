@@ -67,7 +67,8 @@ export class CardUserInfo extends Component {
 
   // Gets the users registered date to display at the top of the screen
   getRegisteredDate() {
-    if (!this.user.get('registered')) return '';
+    if (!this.user.get('registered'))
+      return '';
 
     const registeredDate = this.getJSDateFromTimestamp(this.user.get('registered'));
     return `Registered on ${registeredDate.toISOString().slice(0, 10)}`;
@@ -76,7 +77,9 @@ export class CardUserInfo extends Component {
   // When the form triggers as valid, sets the state.
   // Needed to disable/undisable the save button
   setCanSubmit(canSubmit) {
-    if (this.canSubmit === canSubmit) return;
+    if (this.canSubmit === canSubmit)
+      return;
+
     this.canSubmit = canSubmit;
 
     const { dispatch } = this.props;
@@ -85,8 +88,9 @@ export class CardUserInfo extends Component {
 
   // Calls the action to update the user state with the new data
   // User state needs to be updated for teh calls to the backend
-  setUserState(data) {
-    if (!this.canSubmit) return;
+  setUserState() {
+    if (!this.canSubmit)
+      return;
 
     const transformedData = this.refs.form.getModel();
     transformedData.dob = transformedData.dob.getTime();
@@ -293,4 +297,4 @@ function mapStateToProps(state) {
   };
 }
 
-export const GridListUserListContainer = connect(mapStateToProps)(CardUserInfo);
+export const CardUserInfoContainer = connect(mapStateToProps)(CardUserInfo);

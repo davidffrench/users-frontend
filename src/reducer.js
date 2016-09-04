@@ -27,7 +27,7 @@ function setUsers(state, users) {
 
 // Saves a filtered subset of users in the state
 function setFilteredUsers(state, filterText) {
-  let filteredUsers = [];
+  const filteredUsers = [];
 
   for (const user of state.get('users')) {
     const firstName = user.getIn(['name', 'first']);
@@ -52,7 +52,6 @@ function setUser(state, user) {
 
 // merges the old and new user state when updating from the userinfo screen
 function updateUser(state, newState) {
-  console.log(state.toJS());
   const userMutable = state.get('user') ? state.get('user').toJS() : {};
 
   Object.assign(userMutable, newState.user);
@@ -79,12 +78,12 @@ export default function (state = Map(), action) {
     return setFilteredUsers(state, action.state);
   case 'RECEIVE_USER':
     return setUser(state, action.state);
+  case 'SAVE_USER':
   case 'USER_DELETED':
     return setSnackBarMessage(state, action.state);
   case 'UPDATE_USER':
     return updateUser(state, action.state);
-  case 'SAVE_USER':
-    return setSnackBarMessage(state, action.state);
+  default:
+    return state;
   }
-  return state;
 }

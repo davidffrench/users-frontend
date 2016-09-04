@@ -20,7 +20,7 @@ export class AppBarUserInfo extends Component {
     };
 
     // if canSubmit is not defined, base it off isCreate
-    this.canSubmit = typeof props.canSubmit !== undefined ? props.canSubmit : !props.isCreate;
+    this.canSubmit = (typeof props.canSubmit !== undefined) ? props.canSubmit : !props.isCreate;
     this.isCreate = props.isCreate;
   }
 

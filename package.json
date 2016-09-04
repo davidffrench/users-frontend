@@ -1,7 +1,7 @@
 {
   "name": "users-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Basic React, Redux, Webpack user management app",
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
@@ -18,13 +18,8 @@
     "type": "git",
     "url": "git+https://github.com/davidffrench/users-frontend.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/davidffrench/users-frontend/issues"
-  },
-  "homepage": "https://github.com/davidffrench/users-frontend#readme",
+  "author": "David Ffrench",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
