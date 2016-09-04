@@ -19,7 +19,7 @@ To get started, you'll need to have the following requirements installed
 
 <sup>1</sup>See https://nodejs.org/
 
-<sup>1</sup>See https://github.com/davidffrench/users-api
+<sup>2</sup>See https://github.com/davidffrench/users-api
 
 ## Getting started
 	
