@@ -18,11 +18,19 @@ export class AppBarUserInfo extends Component {
     this.state = {
       dialogOpen: false,
     };
-    this.canSubmit = props.canSubmit;
+
+    this.canSubmit = typeof props.canSubmit !== undefined ? props.canSubmit : !props.isCreate;
+    this.isCreate = props.isCreate;
   }
 
   componentWillReceiveProps(nextProps) {
     this.canSubmit = nextProps.canSubmit;
+    this.isCreate = nextProps.isCreate;
+  }
+
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.removeState('isCreate'));
   }
 
   handleMenuBtnTouchTap() {
@@ -66,7 +74,10 @@ export class AppBarUserInfo extends Component {
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
               <MenuItem primaryText="Save" disabled={!this.canSubmit} />
-              <MenuItem primaryText="Delete" onTouchTap={() => this.handleOpen()} />
+              {!this.isCreate ?
+                <MenuItem primaryText="Delete" onTouchTap={() => this.handleOpen()} />
+                : null
+              }
             </IconMenu>
           }
         />
@@ -84,11 +95,13 @@ export class AppBarUserInfo extends Component {
 }
 AppBarUserInfo.propTypes = {
   canSubmit: React.PropTypes.bool,
+  isCreate: React.PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     canSubmit: state.get('canSubmit'),
+    isCreate: state.get('isCreate'),
   };
 }
 

@@ -26,16 +26,26 @@ export class CardUserInfo extends Component {
 
     this.setCanSubmit = this.setCanSubmit.bind(this);
 
-    this.user = props.user || Map();
-    this.user.name = this.user.get('name') || Map();
-    this.user.location = this.user.get('location') || Map();
-    this.user.picture = this.user.get('picture') || Map();
+    this.setUser(props);
 
     this.canSubmit = false;
   }
 
+  setUser(props) {
+    this.user = props.user || Map();
+    this.user.name = this.user.get('name') || Map();
+    this.user.location = this.user.get('location') || Map();
+    this.user.picture = this.user.get('picture') || Map();
+  }
+
   componentWillReceiveProps(nextProps) {
-    this.user = nextProps.user;
+    this.setUser(nextProps);
+  }
+
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.removeState('user'));
+    dispatch(actionCreators.removeState('canSubmit'));
   }
 
   getJSDateFromTimestamp(timestamp) {

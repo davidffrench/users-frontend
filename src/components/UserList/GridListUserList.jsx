@@ -28,14 +28,17 @@ export class GridListUserList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(actionCreators.removeState('user'));
-    dispatch(actionCreators.removeState('filteredUsers'));
     dispatch(actionCreators.fetchUsers());
   }
 
   componentWillReceiveProps(nextProps) {
     this.users = nextProps.filteredUsers || nextProps.users;
     if (this.users.size === 1) this.colNumber = 1;
+  }
+
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.removeState('filteredUsers'));
   }
 
   getFullName(user) {

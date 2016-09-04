@@ -33,6 +33,10 @@ export class DrawerMenu extends Component {
   onCreateUserItemTapped() {
     this.handleClose();
 
+    const { dispatch } = this.props;
+    dispatch(actionCreators.setState({ isCreate: true }));
+    dispatch(actionCreators.removeState('user'));
+
     this.props.history.push('/userInfo');
   }
 
