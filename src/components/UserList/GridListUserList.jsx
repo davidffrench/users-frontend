@@ -69,7 +69,6 @@ GridListUserList.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     users: state.get('users'),
   };

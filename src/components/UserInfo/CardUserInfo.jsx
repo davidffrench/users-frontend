@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
@@ -10,14 +11,14 @@ const style = {
   marginLeft: 20,
 };
 
-class CardUserInfo extends Component {
+export class CardUserInfo extends Component {
   constructor(props) {
     super(props);
 
     this.user = props.user || {};
-    this.user.name = this.user.name || {};
-    this.user.location = this.user.location || {};
-    this.user.picture = this.user.picture || {};
+    this.user.name = this.user.get('name') || {};
+    this.user.location = this.user.get('location') || {};
+    this.user.picture = this.user.get('picture') || {};
   }
 
   getJSDateFromTimestamp(timestamp) {
@@ -25,9 +26,9 @@ class CardUserInfo extends Component {
   }
 
   getFullName() {
-    const title = this.user.name.title || '';
-    const firstName = this.user.name.first || '';
-    const lastName = this.user.name.last || '';
+    const title = this.user.getIn(['name', 'title']) || '';
+    const firstName = this.user.getIn(['name', 'first']) || '';
+    const lastName = this.user.getIn(['name', 'last']) || '';
     return `${title} ${firstName} ${lastName}`;
   }
 
@@ -44,7 +45,7 @@ class CardUserInfo extends Component {
         <CardHeader
           title={this.getFullName()}
           subtitle={this.getRegisteredDate()}
-          avatar={this.user.picture.thumbnail}
+          avatar={this.user.getIn(['picture', 'thumbnail'])}
         />
         <CardText>
           <Subheader>Name</Subheader>
@@ -54,7 +55,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="Title"
               floatingLabelFixed
-              value={this.user.name.title}
+              value={this.user.getIn(['name', 'title'])}
             />
             <Divider />
             <TextField
@@ -62,7 +63,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="First Name"
               floatingLabelFixed
-              value={this.user.name.first}
+              value={this.user.getIn(['name', 'first'])}
             />
             <Divider />
             <TextField
@@ -70,7 +71,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="Last Name"
               floatingLabelFixed
-              value={this.user.name.last}
+              value={this.user.getIn(['name', 'last'])}
             />
             <Divider />
           </Paper>
@@ -81,7 +82,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="Street"
               floatingLabelFixed
-              value={this.user.location.street}
+              value={this.user.getIn(['location', 'street'])}
             />
             <Divider />
             <TextField
@@ -89,7 +90,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="City"
               floatingLabelFixed
-              value={this.user.location.city}
+              value={this.user.getIn(['location', 'city'])}
             />
             <Divider />
             <TextField
@@ -97,7 +98,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="State"
               floatingLabelFixed
-              value={this.user.location.state}
+              value={this.user.getIn(['location', 'state'])}
             />
             <Divider />
             <TextField
@@ -105,7 +106,7 @@ class CardUserInfo extends Component {
               underlineShow={false}
               floatingLabelText="Zip"
               floatingLabelFixed
-              value={this.user.location.zip}
+              value={this.user.getIn(['location', 'zip'])}
             />
             <Divider />
           </Paper>
@@ -114,7 +115,7 @@ class CardUserInfo extends Component {
             underlineShow={false}
             floatingLabelText="Email"
             floatingLabelFixed
-            value={this.user.email}
+            value={this.user.get('email')}
           /><br />
           <DatePicker
             style={style}
@@ -122,28 +123,28 @@ class CardUserInfo extends Component {
             floatingLabelText="Date of Birth"
             floatingLabelFixed
             autoOk
-            value={this.getJSDateFromTimestamp(this.user.dob)}
+            value={this.getJSDateFromTimestamp(this.user.get('dob'))}
           />
           <TextField
             style={style}
             underlineShow={false}
             floatingLabelText="Phone Number"
             floatingLabelFixed
-            value={this.user.phone}
+            value={this.user.get('phone')}
           />
           <TextField
             style={style}
             underlineShow={false}
             floatingLabelText="Cell Number"
             floatingLabelFixed
-            value={this.user.cell}
+            value={this.user.get('cell')}
           /><br />
           <TextField
             style={style}
             underlineShow={false}
             floatingLabelText="PPS"
             floatingLabelFixed
-            value={this.user.PPS}
+            value={this.user.get('PPS')}
           />
         </CardText>
       </Card>
@@ -155,4 +156,10 @@ CardUserInfo.propTypes = {
   user: React.PropTypes.object.isRequired,
 };
 
-export default CardUserInfo;
+function mapStateToProps(state) {
+  return {
+    user: state.get('user'),
+  };
+}
+
+export const GridListUserListContainer = connect(mapStateToProps)(CardUserInfo);
