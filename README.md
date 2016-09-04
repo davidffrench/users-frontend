@@ -26,6 +26,7 @@ To get started, you'll need to have the following requirements installed
 	git clone <this repo>
 	npm install
 	npm start
+	open browser to http://localhost:8081/
 
 ## Running tests
 
