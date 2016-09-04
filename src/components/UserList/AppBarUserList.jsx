@@ -6,10 +6,6 @@ import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import * as actionCreators from './../../actions';
 
-function handleTouchTap() {
-  alert('onTouchTap triggered on the title component');
-}
-
 const styles = {
   title: {
     cursor: 'pointer',
@@ -29,6 +25,7 @@ export class AppBarUserList extends Component {
     super(props);
 
     this.filterUsers = this.filterUsers.bind(this);
+    this.handleMenuBtnTouchTap = this.handleMenuBtnTouchTap.bind(this);
 
     this.userNames = props.userNames || [];
   }
@@ -37,8 +34,12 @@ export class AppBarUserList extends Component {
     this.userNames = nextProps.userNames.toJS();
   }
 
+  handleMenuBtnTouchTap() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.setState({ drawerOpen: true }));
+  }
+
   filterUsers(fieldText) {
-    console.log('fieldText', fieldText);
     const { dispatch } = this.props;
     dispatch(actionCreators.filterUsers(fieldText));
   }
@@ -47,8 +48,7 @@ export class AppBarUserList extends Component {
     return (
       <AppBar
         title={<span style={styles.title}>User List</span>}
-        onTitleTouchTap={handleTouchTap}
-        // iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+        onLeftIconButtonTouchTap={this.handleMenuBtnTouchTap}
         iconElementRight={
           <Paper style={styles.searchPaper} zDepth={1}>
             <AutoComplete

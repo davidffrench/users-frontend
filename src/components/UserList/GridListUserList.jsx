@@ -28,7 +28,8 @@ export class GridListUserList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(actionCreators.clearUser());
+    dispatch(actionCreators.removeState('user'));
+    dispatch(actionCreators.removeState('filteredUsers'));
     dispatch(actionCreators.fetchUsers());
   }
 

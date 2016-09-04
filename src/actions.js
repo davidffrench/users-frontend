@@ -23,13 +23,6 @@ function receiveUser(user) {
   };
 }
 
-export function clearUser() {
-  return {
-    type: 'CLEAR_USER',
-    state: '',
-  };
-}
-
 function receiveUsers(users) {
   return {
     type: 'RECEIVE_USERS',
@@ -56,6 +49,13 @@ export function filterUsers(filtertext) {
   return {
     type: 'FILTER_USERS',
     state: filtertext,
+  };
+}
+
+export function removeState(nodeToRemove) {
+  return {
+    type: 'REMOVE_STATE',
+    state: nodeToRemove,
   };
 }
 

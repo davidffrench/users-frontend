@@ -39,8 +39,8 @@ function setUser(state, user) {
   return state.set('user', fromJS(user));
 }
 
-function clearUser(state, user) {
-  return state.remove('user');
+function removeState(state, nodeToRemove) {
+  return state.remove(nodeToRemove);
 }
 
 export default function (state = Map(), action) {
@@ -53,8 +53,8 @@ export default function (state = Map(), action) {
     return setFilteredUsers(state, action.state);
   case 'RECEIVE_USER':
     return setUser(state, action.state);
-  case 'CLEAR_USER':
-    return clearUser(state, action.state);
+  case 'REMOVE_STATE':
+    return removeState(state, action.state);
   }
   return state;
 }

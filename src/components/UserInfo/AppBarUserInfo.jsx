@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -6,18 +7,22 @@ import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import * as actionCreators from './../../actions';
 
-function handleTouchTap() {
-  alert('onTouchTap triggered on the title component');
-}
-
-class AppBarUserInfo extends Component {
+export class AppBarUserInfo extends Component {
   constructor(props) {
     super(props);
+
+    this.handleMenuBtnTouchTap = this.handleMenuBtnTouchTap.bind(this);
 
     this.state = {
       dialogOpen: false,
     };
+  }
+
+  handleMenuBtnTouchTap() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.setState({ drawerOpen: true }));
   }
 
   handleOpen() {
@@ -46,7 +51,7 @@ class AppBarUserInfo extends Component {
       <div>
         <AppBar
           title={<span>User Information</span>}
-          onLeftIconButtonTouchTap={handleTouchTap}
+          onLeftIconButtonTouchTap={this.handleMenuBtnTouchTap}
           iconElementRight={
             <IconMenu
               iconButtonElement={
@@ -72,5 +77,7 @@ class AppBarUserInfo extends Component {
     );
   }
 }
+
+export const AppBarUserInfoContainer = connect()(AppBarUserInfo);
 
 export default AppBarUserInfo;
