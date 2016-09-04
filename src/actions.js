@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+const apiURL = 'http://192.168.0.12:8000';
+
 export function setState(state) {
   return {
     type: 'SET_STATE',
@@ -14,10 +16,17 @@ export function selectUser(user) {
   };
 }
 
-function receiveUser(json) {
+function receiveUser(user) {
   return {
     type: 'RECEIVE_USER',
-    state: json,
+    state: user,
+  };
+}
+
+export function clearUser() {
+  return {
+    type: 'CLEAR_USER',
+    state: '',
   };
 }
 
@@ -29,15 +38,16 @@ function receiveUsers(users) {
 }
 
 export function fetchUser(user) {
+  const userId = user.get('_id');
   return dispatch =>
-    fetch('http://localhost:8000/users/${user}')
+    fetch(`${apiURL}/users/${userId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveUser(json)));
 }
 
 export function fetchUsers() {
   return dispatch =>
-    fetch('http://localhost:8000/users/')
+    fetch(`${apiURL}/users/`)
       .then(response => response.json())
       .then(json => dispatch(receiveUsers(json)));
 }

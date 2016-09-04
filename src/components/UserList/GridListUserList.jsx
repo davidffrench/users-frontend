@@ -28,13 +28,12 @@ export class GridListUserList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    dispatch(actionCreators.clearUser());
     dispatch(actionCreators.fetchUsers());
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
     this.users = nextProps.filteredUsers || nextProps.users;
-    console.log(this.users);
     if (this.users.size === 1) this.colNumber = 1;
   }
 
@@ -44,7 +43,9 @@ export class GridListUserList extends Component {
     return `${firstName} ${lastName}`;
   }
 
-  moreInfo() {
+  moreInfo(user) {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.fetchUser(user));
     this.props.history.push('/userinfo');
   }
 
@@ -64,7 +65,7 @@ export class GridListUserList extends Component {
               subtitle={<span><b>{user.get('email')}</b></span>}
               actionIcon={
                 <IconButton
-                  onTouchTap={() => this.moreInfo()}
+                  onTouchTap={() => this.moreInfo(user)}
                 >
                   <InfoBorder color="white" />
                 </IconButton>}

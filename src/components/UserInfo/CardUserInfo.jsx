@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Map } from 'immutable';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
@@ -15,10 +16,14 @@ export class CardUserInfo extends Component {
   constructor(props) {
     super(props);
 
-    this.user = props.user || {};
-    this.user.name = this.user.get('name') || {};
-    this.user.location = this.user.get('location') || {};
-    this.user.picture = this.user.get('picture') || {};
+    this.user = props.user || Map();
+    this.user.name = this.user.get('name') || Map();
+    this.user.location = this.user.get('location') || Map();
+    this.user.picture = this.user.get('picture') || Map();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.user = nextProps.user;
   }
 
   getJSDateFromTimestamp(timestamp) {
@@ -153,7 +158,7 @@ export class CardUserInfo extends Component {
 }
 
 CardUserInfo.propTypes = {
-  user: React.PropTypes.object.isRequired,
+  user: React.PropTypes.object,
 };
 
 function mapStateToProps(state) {

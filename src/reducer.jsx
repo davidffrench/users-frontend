@@ -28,8 +28,19 @@ function setFilteredUsers(state, filterText) {
       filteredUsers.push(user);
     }
   }
+  if (filteredUsers) {
+    return state.set('filteredUsers', fromJS(filteredUsers));
+  } else {
+    return state.remove('filteredUsers');
+  }
+}
 
-  return state.set('filteredUsers', fromJS(filteredUsers));
+function setUser(state, user) {
+  return state.set('user', fromJS(user));
+}
+
+function clearUser(state, user) {
+  return state.remove('user');
 }
 
 export default function (state = Map(), action) {
@@ -40,6 +51,10 @@ export default function (state = Map(), action) {
     return setUsers(state, action.state);
   case 'FILTER_USERS':
     return setFilteredUsers(state, action.state);
+  case 'RECEIVE_USER':
+    return setUser(state, action.state);
+  case 'CLEAR_USER':
+    return clearUser(state, action.state);
   }
   return state;
 }
