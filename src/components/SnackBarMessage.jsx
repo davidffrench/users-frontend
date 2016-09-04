@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 
 export class SnackBarMessage extends Component {
-
   constructor(props) {
     super(props);
 
     this.handleRequestClose = this.handleRequestClose.bind(this);
 
+    // Only want to display the snackbar when a message is set
+    // Allows for it to be used generically
     this.state = {
       open: this.props.snackBarMessage ? true : false,
     };
@@ -20,6 +21,7 @@ export class SnackBarMessage extends Component {
     });
   }
 
+  // Called when the user clicks anywhere on the screen
   handleRequestClose() {
     this.setState({
       open: false,

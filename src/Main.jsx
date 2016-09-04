@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// Root route component to render markup that is common across all routes
 class Main extends Component {
   render() {
     return React.cloneElement(

@@ -14,6 +14,7 @@ const style = {
   marginLeft: 20,
 };
 
+// Error messages to display for validation
 const errorMessages = {
   wordsError: 'Please only use letters',
   numericError: 'Please provide a number',
@@ -32,6 +33,18 @@ export class CardUserInfo extends Component {
     this.canSubmit = false;
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setUser(nextProps);
+  }
+
+  // Remove user and canSubmit state when view is to be destoryed
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch(actionCreators.removeState('user'));
+    dispatch(actionCreators.removeState('canSubmit'));
+  }
+
+  // Convenience function to not throw errors for nested maps
   setUser(props) {
     this.user = props.user || Map();
     this.user.name = this.user.get('name') || Map();
@@ -39,20 +52,12 @@ export class CardUserInfo extends Component {
     this.user.picture = this.user.get('picture') || Map();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setUser(nextProps);
-  }
-
-  componentWillUnmount() {
-    const { dispatch } = this.props;
-    dispatch(actionCreators.removeState('user'));
-    dispatch(actionCreators.removeState('canSubmit'));
-  }
-
+  // Convenience function for formatting the JS date from returned timestamp
   getJSDateFromTimestamp(timestamp) {
     return timestamp ? new Date(timestamp * 1000) : null;
   }
 
+  // Used to display the full users name at the top of the card
   getFullName() {
     const title = this.user.getIn(['name', 'title']) || '';
     const firstName = this.user.getIn(['name', 'first']) || '';
@@ -60,6 +65,7 @@ export class CardUserInfo extends Component {
     return `${title} ${firstName} ${lastName}`;
   }
 
+  // Gets the users registered date to display at the top of the screen
   getRegisteredDate() {
     if (!this.user.get('registered')) return '';
 
@@ -67,6 +73,8 @@ export class CardUserInfo extends Component {
     return `Registered on ${registeredDate.toISOString().slice(0, 10)}`;
   }
 
+  // When the form triggers as valid, sets the state.
+  // Needed to disable/undisable the save button
   setCanSubmit(canSubmit) {
     if (this.canSubmit === canSubmit) return;
     this.canSubmit = canSubmit;
@@ -75,6 +83,8 @@ export class CardUserInfo extends Component {
     dispatch(actionCreators.setState({ canSubmit }));
   }
 
+  // Calls the action to update the user state with the new data
+  // User state needs to be updated for teh calls to the backend
   setUserState(data) {
     if (!this.canSubmit) return;
 
@@ -85,6 +95,13 @@ export class CardUserInfo extends Component {
     dispatch(actionCreators.updateUser({ user: transformedData }));
   }
 
+  /* Layout uses a nested structure as follows
+  * Card
+  *  CardHeader
+  *  CardText
+  *   Formsy.Form
+  *     Form fields and Paper
+  */
   render() {
     return (
       <Card>
@@ -94,7 +111,7 @@ export class CardUserInfo extends Component {
           avatar={this.user.getIn(['picture', 'thumbnail'])}
         />
         <CardText>
-          <Formsy.Form 
+          <Formsy.Form
             ref="form"
             onChange={this.setUserState}
             onValid={() => this.setCanSubmit(true)}

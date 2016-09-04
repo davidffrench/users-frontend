@@ -9,6 +9,27 @@ export function setState(state) {
   };
 }
 
+export function removeState(nodeToRemove) {
+  return {
+    type: 'REMOVE_STATE',
+    state: nodeToRemove,
+  };
+}
+
+export function filterUsers(filtertext) {
+  return {
+    type: 'FILTER_USERS',
+    state: filtertext,
+  };
+}
+
+export function updateUser(state) {
+  return {
+    type: 'UPDATE_USER',
+    state,
+  };
+}
+
 function receiveUser(user) {
   return {
     type: 'RECEIVE_USER',
@@ -85,25 +106,4 @@ export function createUser(user) {
       body: JSON.stringify(user),
     })
     .then(dispatch(userSaved('Save Successful')));
-}
-
-export function filterUsers(filtertext) {
-  return {
-    type: 'FILTER_USERS',
-    state: filtertext,
-  };
-}
-
-export function removeState(nodeToRemove) {
-  return {
-    type: 'REMOVE_STATE',
-    state: nodeToRemove,
-  };
-}
-
-export function updateUser(state) {
-  return {
-    type: 'UPDATE_USER',
-    state,
-  };
 }

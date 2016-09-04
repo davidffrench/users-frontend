@@ -5,6 +5,7 @@ import { AppBarUserInfoContainer } from './AppBarUserInfo';
 import { DrawerMenuContainer } from './../DrawerMenu';
 import { SnackBarMessageContainer } from './../SnackBarMessage';
 
+// Main component to structure the user info screen
 class MainUserList extends Component {
   render() {
     return (

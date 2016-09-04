@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import * as actionCreators from './../../actions';
 
+// Styles for the app bar and search field
 const styles = {
   title: {
     cursor: 'pointer',
@@ -27,6 +28,7 @@ export class AppBarUserList extends Component {
     this.filterUsers = this.filterUsers.bind(this);
     this.handleMenuBtnTouchTap = this.handleMenuBtnTouchTap.bind(this);
 
+    // usernames is the mapped names of the fetched users
     this.userNames = props.userNames || [];
   }
 
@@ -34,16 +36,20 @@ export class AppBarUserList extends Component {
     this.userNames = nextProps.userNames.toJS();
   }
 
+  // Opens the drawer menu
   handleMenuBtnTouchTap() {
     const { dispatch } = this.props;
     dispatch(actionCreators.setState({ drawerOpen: true }));
   }
 
+  // Called when enter is pressed or a selection is made
+  // Calls the action to create the filteredUsers state based on the search text
   filterUsers(fieldText) {
     const { dispatch } = this.props;
     dispatch(actionCreators.filterUsers(fieldText));
   }
 
+  // Using auto complete component
   render() {
     return (
       <AppBar

@@ -7,6 +7,7 @@ import Subheader from 'material-ui/Subheader';
 import InfoBorder from 'material-ui/svg-icons/action/info';
 import * as actionCreators from './../../actions';
 
+// Styles for the grid
 const styles = {
   root: {
     display: 'flex',
@@ -22,10 +23,13 @@ const styles = {
 export class GridListUserList extends Component {
   constructor(props) {
     super(props);
+
+    // If filteredusers exist, use them. if not then use users
     this.users = props.filteredUsers || props.users || [];
     this.colNumber = 2;
   }
 
+  // Called on initial render, used to fetch users
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(actionCreators.fetchUsers());
@@ -33,26 +37,34 @@ export class GridListUserList extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.users = nextProps.filteredUsers || nextProps.users;
+    // reduce number of columns if only 1 user exists, for when filtering
     if (this.users.size === 1) this.colNumber = 1;
   }
 
+  // Called before the view is destroyed
   componentWillUnmount() {
     const { dispatch } = this.props;
+    // remove the filtered users state
     dispatch(actionCreators.removeState('filteredUsers'));
   }
 
+  // Convience function to get users full name
   getFullName(user) {
     const firstName = user.getIn(['name', 'first']);
     const lastName = user.getIn(['name', 'last']);
     return `${firstName} ${lastName}`;
   }
 
-  moreInfo(user) {
+  // Fetches the select users and switches to user info screen
+  handleMoreInfoTap(user) {
     const { dispatch } = this.props;
+
     dispatch(actionCreators.fetchUser(user));
+
     this.props.history.push('/userinfo');
   }
 
+  // Grid list loops over users list to create individual tiles
   render() {
     return (
       <div style={styles.root}>
@@ -69,7 +81,7 @@ export class GridListUserList extends Component {
               subtitle={<span><b>{user.get('email')}</b></span>}
               actionIcon={
                 <IconButton
-                  onTouchTap={() => this.moreInfo(user)}
+                  onTouchTap={() => this.handleMoreInfoTap(user)}
                 >
                   <InfoBorder color="white" />
                 </IconButton>}

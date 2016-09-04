@@ -1,14 +1,18 @@
 import React from 'react';
 import { Map, fromJS } from 'immutable';
 
+// generic set state function
 function setState(state, newState) {
   return state.merge(newState);
 }
 
+// generic remove state function
 function removeState(state, nodeToRemove) {
   return state.remove(nodeToRemove);
 }
 
+// sets the users state
+// maps the users names for the auocomplete search field datasource
 function setUsers(state, users) {
   const userNames = users.map(user => {
     const firstName = user.name.first;
@@ -21,6 +25,7 @@ function setUsers(state, users) {
   });
 }
 
+// Saves a filtered subset of users in the state
 function setFilteredUsers(state, filterText) {
   let filteredUsers = [];
 
@@ -40,10 +45,12 @@ function setFilteredUsers(state, filterText) {
   }
 }
 
+// sets the selected user, the user state is used on theuserinfo screen
 function setUser(state, user) {
   return state.set('user', fromJS(user));
 }
 
+// merges the old and new user state when updating from the userinfo screen
 function updateUser(state, newState) {
   console.log(state.toJS());
   const userMutable = state.get('user') ? state.get('user').toJS() : {};
@@ -53,10 +60,13 @@ function updateUser(state, newState) {
   return state.set('user', fromJS(userMutable));
 }
 
+//generic function for setting the snack bar message
 function setSnackBarMessage(state, message) {
   return state.set('snackBarMessage', message);
 }
 
+// generic function that takes any kind action - along with the current state
+// invokes the core function that matches the action
 export default function (state = Map(), action) {
 	switch (action.type) {
   case 'SET_STATE':

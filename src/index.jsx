@@ -14,6 +14,7 @@ import Main from './Main';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+// setup redux store with thunk for async actions
 const store = createStore(
   reducer,
   applyMiddleware(
@@ -21,12 +22,14 @@ const store = createStore(
   )
 );
 
+// React Routes with user grid list as the entry point
 const routes = <Route component={Main}>
   <Route path="/userinfo" component={MainUserInfo} />
   <Route path="/" component={MainUserList} />
 </Route>;
 
 // Render the main app react component into the app div.
+// Using router hash history
 render(
   <Provider store={store}>
     <Router history={hashHistory}>{routes}</Router>

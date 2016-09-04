@@ -19,6 +19,7 @@ export class AppBarUserInfo extends Component {
       dialogOpen: false,
     };
 
+    // if canSubmit is not defined, base it off isCreate
     this.canSubmit = typeof props.canSubmit !== undefined ? props.canSubmit : !props.isCreate;
     this.isCreate = props.isCreate;
   }
@@ -28,24 +29,29 @@ export class AppBarUserInfo extends Component {
     this.isCreate = nextProps.isCreate;
   }
 
+  // Remove isCreate state when component is getting destroyed
   componentWillUnmount() {
     const { dispatch } = this.props;
     dispatch(actionCreators.removeState('isCreate'));
   }
 
+  // Open drawer menu
   handleMenuBtnTouchTap() {
     const { dispatch } = this.props;
     dispatch(actionCreators.setState({ drawerOpen: true }));
   }
 
+  // Handles open for the sub menu with save & delete options
   handleOpen() {
     this.setState({ dialogOpen: true });
   }
 
+  // Handle close for sub menu
   handleClose() {
     this.setState({ dialogOpen: false });
   }
 
+  // Handle user delete, send action to delete user and switch to user list
   handleUserDelete() {
     const { dispatch } = this.props;
     dispatch(actionCreators.deleteUser(this.props.userId));
@@ -54,9 +60,11 @@ export class AppBarUserInfo extends Component {
     this.props.history.push('/');
   }
 
+  // Handle saving of user
   handleUserSave() {
     const { dispatch } = this.props;
 
+    // Dispatch different actions if it is a new or existing user
     if (this.props.isCreate) {
       dispatch(actionCreators.createUser(this.props.user.toJS()));
     } else {
@@ -80,6 +88,7 @@ export class AppBarUserInfo extends Component {
       />,
     ];
 
+    // Almost all for the right hand sub menu
     return (
       <div>
         <AppBar
