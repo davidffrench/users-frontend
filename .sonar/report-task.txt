@@ -1,5 +1,0 @@
-projectKey=users-frontend
-serverUrl=http://localhost:9000
-dashboardUrl=http://localhost:9000/dashboard/index/users-frontend
-ceTaskId=AVb3XJHyaLo4lzfvMC2I
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVb3XJHyaLo4lzfvMC2I
