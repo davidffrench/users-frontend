@@ -77,7 +77,7 @@ const user = {
 };
 
 const moreInfo = function (user) {
-  alert("hello");
+  this.props.history.push('/userinfo');
 };
 
 class Main extends Component {

@@ -7,7 +7,7 @@ import {
   scryRenderedDOMComponentsWithTag,
   Simulate,
 } from 'react-addons-test-utils';
-import GridListUsers from '../../src/components/GridListUsers';
+import GridListUserList from '../../src/components/UserList/GridListUserList';
 import { expect } from 'chai';
 
 injectTapEventPlugin();
@@ -25,11 +25,11 @@ const tilesData = [
   },
 ];
 
-describe('GridListUsers', () => {
+describe('GridListUserList', () => {
   it('renders a pair grid tiles', () => {
     const component = renderIntoDocument(
       <MuiThemeProvider>
-        <GridListUsers users={tilesData} />
+        <GridListUserList users={tilesData} />
       </MuiThemeProvider>
     );
     const imgs = scryRenderedDOMComponentsWithTag(component, 'img');
@@ -47,7 +47,7 @@ describe('GridListUsers', () => {
 
     const component = renderIntoDocument(
       <MuiThemeProvider>
-        <GridListUsers users={tilesData} moreInfo={moreInfo} />
+        <GridListUserList users={tilesData} moreInfo={moreInfo} />
       </MuiThemeProvider>
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
