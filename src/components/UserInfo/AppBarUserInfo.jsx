@@ -18,6 +18,11 @@ export class AppBarUserInfo extends Component {
     this.state = {
       dialogOpen: false,
     };
+    this.canSubmit = props.canSubmit;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.canSubmit = nextProps.canSubmit;
   }
 
   handleMenuBtnTouchTap() {
@@ -60,7 +65,7 @@ export class AppBarUserInfo extends Component {
               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
-              <MenuItem primaryText="Save" />
+              <MenuItem primaryText="Save" disabled={!this.canSubmit} />
               <MenuItem primaryText="Delete" onTouchTap={() => this.handleOpen()} />
             </IconMenu>
           }
@@ -77,7 +82,16 @@ export class AppBarUserInfo extends Component {
     );
   }
 }
+AppBarUserInfo.propTypes = {
+  canSubmit: React.PropTypes.bool,
+};
 
-export const AppBarUserInfoContainer = connect()(AppBarUserInfo);
+function mapStateToProps(state) {
+  return {
+    canSubmit: state.get('canSubmit'),
+  };
+}
 
-export default AppBarUserInfo;
+export const AppBarUserInfoContainer = connect(
+  mapStateToProps
+)(AppBarUserInfo);

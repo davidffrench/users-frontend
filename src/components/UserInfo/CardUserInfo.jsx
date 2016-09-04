@@ -8,6 +8,7 @@ import Subheader from 'material-ui/Subheader';
 import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
 import { FormsyDate, FormsySelect, FormsyText } from 'formsy-material-ui/lib';
+import * as actionCreators from './../../actions';
 
 const style = {
   marginLeft: 20,
@@ -23,8 +24,7 @@ export class CardUserInfo extends Component {
   constructor(props) {
     super(props);
 
-    this.enableButton = this.enableButton.bind(this);
-    this.disableButton = this.disableButton.bind(this);
+    this.setCanSubmit = this.setCanSubmit.bind(this);
 
     this.user = props.user || Map();
     this.user.name = this.user.get('name') || Map();
@@ -50,26 +50,22 @@ export class CardUserInfo extends Component {
   }
 
   getRegisteredDate() {
-    if (!this.user.registered) return '';
+    if (!this.user.get('registered')) return '';
 
-    const registeredDate = this.getJSDateFromTimestamp(this.user.registered);
+    const registeredDate = this.getJSDateFromTimestamp(this.user.get('registered'));
     return `Registered on ${registeredDate.toISOString().slice(0, 10)}`;
   }
 
-  enableButton() {
-    this.canSubmit = true;
-  }
+  setCanSubmit(canSubmit) {
+    if (this.canSubmit === canSubmit) return;
+    this.canSubmit = canSubmit;
 
-  disableButton() {
-    this.canSubmit = false;
+    const { dispatch } = this.props;
+    dispatch(actionCreators.setState({ canSubmit }));
   }
 
   submitForm(data) {
     alert(JSON.stringify(data, null, 4));
-  }
-
-  notifyFormError(data) {
-    console.error('Form error:', data);
   }
 
   render() {
@@ -82,8 +78,8 @@ export class CardUserInfo extends Component {
         />
         <CardText>
           <Formsy.Form
-            onValid={this.enableButton}
-            onInvalid={this.disableButton}
+            onValid={() => this.setCanSubmit(true)}
+            onInvalid={() => this.setCanSubmit(false)}
             onValidSubmit={this.submitForm}
             onInvalidSubmit={this.notifyFormError}
           >
@@ -96,14 +92,15 @@ export class CardUserInfo extends Component {
                 underlineShow={false}
                 floatingLabelText="Title"
                 floatingLabelFixed
+                value={this.user.getIn(['name', 'title'])}
                 menuItems={this.selectFieldItems}
               >
-                <MenuItem value={'Miss'} primaryText="Miss" />
-                <MenuItem value={'Ms'} primaryText="Ms" />
-                <MenuItem value={'Mr'} primaryText="Mr" />
-                <MenuItem value={'Sir'} primaryText="Sir" />
-                <MenuItem value={'Mrs'} primaryText="Mrs" />
-                <MenuItem value={'Dr'} primaryText="Dr" />
+                <MenuItem value={'miss'} primaryText="Miss" />
+                <MenuItem value={'ms'} primaryText="Ms" />
+                <MenuItem value={'mr'} primaryText="Mr" />
+                <MenuItem value={'sir'} primaryText="Sir" />
+                <MenuItem value={'mrs'} primaryText="Mrs" />
+                <MenuItem value={'dr'} primaryText="Dr" />
               </FormsySelect>
               <Divider />
               <FormsyText
@@ -115,7 +112,6 @@ export class CardUserInfo extends Component {
                 underlineShow={false}
                 floatingLabelText="First Name"
                 floatingLabelFixed
-
                 value={this.user.getIn(['name', 'first'])}
               />
               <Divider />
@@ -128,7 +124,6 @@ export class CardUserInfo extends Component {
                 underlineShow={false}
                 floatingLabelText="Last Name"
                 floatingLabelFixed
-
                 value={this.user.getIn(['name', 'last'])}
               />
               <Divider />
@@ -142,7 +137,6 @@ export class CardUserInfo extends Component {
                 underlineShow={false}
                 floatingLabelText="Street"
                 floatingLabelFixed
-
                 value={this.user.getIn(['location', 'street'])}
               />
               <Divider />
@@ -155,7 +149,6 @@ export class CardUserInfo extends Component {
                 underlineShow={false}
                 floatingLabelText="City"
                 floatingLabelFixed
-
                 value={this.user.getIn(['location', 'city'])}
               />
               <Divider />
@@ -168,20 +161,18 @@ export class CardUserInfo extends Component {
                 underlineShow={false}
                 floatingLabelText="State"
                 floatingLabelFixed
-
                 value={this.user.getIn(['location', 'state'])}
               />
               <Divider />
               <FormsyText
                 name="zip"
-                validations="isWords"
-                validationError={errorMessages.wordsError}
+                validations="isNumeric"
+                validationError={errorMessages.numericError}
                 required
                 style={style}
                 underlineShow={false}
                 floatingLabelText="Zip"
                 floatingLabelFixed
-
                 value={this.user.getIn(['location', 'zip'])}
               />
               <Divider />
@@ -227,8 +218,6 @@ export class CardUserInfo extends Component {
             /><br />
             <FormsyText
               name="pps"
-              validations="isNumeric"
-              validationError={errorMessages.numericError}
               required
               style={style}
               underlineShow={false}
@@ -251,6 +240,7 @@ CardUserInfo.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.get('user'),
+    canSubmit: state.get('canSubmit'),
   };
 }
 
