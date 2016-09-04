@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Immutable from 'immutable';
+import { connect } from 'react-redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
@@ -16,11 +18,20 @@ const styles = {
   },
 };
 
-class GridListUserList extends Component {
+export class GridListUserList extends Component {
   constructor(props) {
     super(props);
     this.users = props.users || [];
-    this.moreInfo = props.moreInfo;
+  }
+
+  getFullName(user) {
+    const firstName = user.getIn(['name', 'first']);
+    const lastName = user.getIn(['name', 'last']);
+    return `${firstName} ${lastName}`;
+  }
+
+  moreInfo() {
+    this.props.history.push('/userinfo');
   }
 
   render() {
@@ -32,29 +43,36 @@ class GridListUserList extends Component {
           style={styles.gridList}
         >
           <Subheader />
-          {this.users.map((user) => (
+          {this.users.map(user =>
             <GridTile
-              key={user.img}
-              title={user.title}
-              subtitle={<span>by <b>{user.author}</b></span>}
+              key={user.get('id')}
+              title={this.getFullName(user)}
+              subtitle={<span><b>{user.get('email')}</b></span>}
               actionIcon={
                 <IconButton
-                  onTouchTap={() => this.moreInfo(user)}
+                  onTouchTap={() => this.moreInfo()}
                 >
                   <InfoBorder color="white" />
                 </IconButton>}
             >
-              <img role="presentation" src={user.img} />
+              <img role="presentation" src={user.get('img')} />
             </GridTile>
-          ))}
+          )}
         </GridList>
       </div>
     );
   }
 }
 GridListUserList.propTypes = {
-  users: React.PropTypes.array.isRequired,
-  moreInfo: React.PropTypes.func,
+  users: React.PropTypes.instanceOf(Immutable.List).isRequired,
+  history: React.PropTypes.object,
 };
 
-export default GridListUserList;
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    users: state.get('users'),
+  };
+}
+
+export const GridListUserListContainer = connect(mapStateToProps)(GridListUserList);

@@ -1,10 +1,12 @@
-import { List } from 'immutable';
+import { Map } from 'immutable';
 
 function setState(state, newState) {
   return state.merge(newState);
 }
 
-export default function (state = List(), action) {
+export default function (state = Map(), action) {
+  console.log(state);
+  console.log(action);
 	switch (action.type) {
   case 'SET_STATE':
     return setState(state, action.state);

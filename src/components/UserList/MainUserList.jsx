@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GridListUserList from './GridListUserList';
+import { GridListUserListContainer } from './GridListUserList';
 import AppBarUserList from './AppBarUserList';
 
 class MainUserList extends Component {
@@ -12,7 +12,7 @@ class MainUserList extends Component {
       <MuiThemeProvider>
         <div>
           <AppBarUserList />
-          <GridListUserList {...this.props} />
+          <GridListUserListContainer {...this.props} />
         </div>
       </MuiThemeProvider>
     );
