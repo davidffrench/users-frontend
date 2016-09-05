@@ -24,7 +24,7 @@ To get started, you'll need to have the following requirements installed
 ## Getting started
 	
 	git clone <this repo>
-	npm install
+	npm install - (can take 1-2 minutes)
 	npm start
 	open browser to http://localhost:8081/
 
