@@ -43,3 +43,16 @@ Note: This needs the JS plugin of version 2.12 or later for jsx support
 3. Once done, you will need to restart your SonarQube Server.
 
 See http://docs.sonarqube.org/display/SONAR/Get+Started+in+Two+Minutes for more details on how to setup SonarQube locally.
+
+## Some potential next steps
+- Send back only needed data in the /users GET call
+- Implement authentication
+- Validation of request bodies
+
+## Docker
+Can't use right now.
+
+Unfortunately i had issues getting docker-compose working correctly. The issue is down the networking between the containers with the API container connecting to the mongoDB container. This was resolved by specifying the docker container name on mongoose connect but then it won't work through non docker installation. There is also an issue with the seed script not running on setup.
+
+Since the work was done, I have included the docker-compose.yml file which needs to be in the parent folder of the users-api and users-frontend
+
