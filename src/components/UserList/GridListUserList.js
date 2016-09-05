@@ -26,7 +26,16 @@ export class GridListUserList extends Component {
 
     // If filteredusers exist, use them. if not then use users
     this.users = props.filteredUsers || props.users || [];
-    this.colNumber = 2;
+
+    if(screen.width <= 768) {
+      this.colNumber = 2;
+    } else if (screen.width > 768 && screen.width <= 1024) {
+      this.colNumber = 4;
+    } else if (screen.width > 1024 && screen.width <= 1440) {
+      this.colNumber = 5;
+    } else if (screen.width > 1440) {
+      this.colNumber = 6;
+    }
   }
 
   // Called on initial render, used to fetch users
