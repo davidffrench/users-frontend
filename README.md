@@ -19,7 +19,7 @@ To get started, you'll need to have the following requirements installed
 
 <sup>1</sup>See https://nodejs.org/
 
-<sup>1</sup>See https://github.com/davidffrench/users-api
+<sup>2</sup>See https://github.com/davidffrench/users-api
 
 ## Getting started
 	
@@ -36,6 +36,7 @@ To get started, you'll need to have the following requirements installed
 In addition to ESLint, I've also included some configuration for SonarQube in `sonar-project.properties`.
 
 Note: This needs the JS plugin of version 2.12 or later for jsx support
+
 1. Download plugin .jar from http://sonarsource.bintray.com/Distribution/sonar-javascript-plugin/sonar-javascript-plugin-2.15.jar 
 2. Upload the downloaded jar file in your SonarQube Server and put it in the directory : $SONARQUBE_HOME/extensions/plugins.
     * Note - *If another version of the same plugin is already there, you need to remove/backup it as only one version of a given plugin must be available in the extensions/plugins directory.*
