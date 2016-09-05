@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-const apiURL = 'http://192.168.0.12:8000';
+const apiURL = 'http://localhost:8000';
 
 export function setState(state) {
   return {
@@ -58,6 +58,7 @@ function userDeleted(state) {
   };
 }
 
+// fetch a single user from the server
 export function fetchUser(user) {
   const userId = user.get('_id');
   return dispatch =>
@@ -66,7 +67,7 @@ export function fetchUser(user) {
       .then(json => dispatch(receiveUser(json)));
 }
 
-
+// fetch all users from the server
 export function fetchUsers() {
   return dispatch =>
     fetch(`${apiURL}/users/`)
@@ -74,6 +75,7 @@ export function fetchUsers() {
       .then(json => dispatch(receiveUsers(json)));
 }
 
+// delete a single user
 export function deleteUser(userId) {
   return dispatch =>
     fetch(`${apiURL}/users/${userId}`, {
@@ -82,6 +84,7 @@ export function deleteUser(userId) {
     .then(dispatch(userDeleted('Delete Successful')));
 }
 
+// update a single user
 export function saveUser(userId, user) {
   return dispatch =>
     fetch(`${apiURL}/users/${userId}`, {
@@ -95,6 +98,7 @@ export function saveUser(userId, user) {
     .then(dispatch(userSaved('Save Successful')));
 }
 
+//create a new user
 export function createUser(user) {
   return dispatch =>
     fetch(`${apiURL}/users/`, {
