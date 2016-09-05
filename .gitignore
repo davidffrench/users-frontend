@@ -5,7 +5,7 @@ node_modules
 .sonar
 
 # production
-build
+build/bundle.js
 
 # misc
 .DS_Store
